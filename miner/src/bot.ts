@@ -3,6 +3,7 @@ require('dotenv-flow').config()
 
 import axios from 'axios'
 import {Farmer} from './achi/Farmer'
+import FormData from 'form-data'
 import {FullNode} from './achi/FullNode'
 import {Harvester} from './achi/Harvester'
 import {Wallet} from './achi/Wallet'
@@ -35,12 +36,18 @@ import {Wallet} from './achi/Wallet'
       },
     }
 
-    console.log(JSON.stringify(data, null, '  '))
+    // const document = Buffer.from(JSON.stringify(data))
+    const document = Buffer.from(JSON.stringify(data, null, '  '))
 
-    await axios.get(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`, {
+    const formData = new FormData()
+
+    formData.append('document', document, {
+      filename: 'achi.json',
+    })
+
+    await axios.post(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendDocument`, formData, {
       params: {
         chat_id: process.env.CHAT_ID,
-        text   : 'Hello, Telegram!',
       },
     })
   } catch(error) {
