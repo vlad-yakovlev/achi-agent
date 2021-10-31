@@ -2,22 +2,24 @@
 require('dotenv-flow').config()
 
 import axios from 'axios'
-import {Farmer} from './achi/Farmer'
+
+// import {Farmer} from './achi/Farmer'
 import {FullNode} from './achi/FullNode'
-import { Harvester } from './achi/Harvester'
+import {Harvester} from './achi/Harvester'
 import {Wallet} from './achi/Wallet'
 
 (async () => {
   try {
-    const farmer = new Farmer()
+    // const farmer = new Farmer()
     const fullNode = new FullNode()
     const harvester = new Harvester()
     const wallet = new Wallet()
 
     const data = {
-      farmer: {
-        poolState: await farmer.getPoolState(),
-      },
+
+      // farmer: {
+      //   poolState: await farmer.getPoolState(),
+      // },
 
       fullNode: {
         blockchainState: await fullNode.getBlockchainState(),
