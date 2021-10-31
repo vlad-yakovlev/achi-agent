@@ -1,6 +1,6 @@
 export interface AchiConfig {
   ALERTS_URL: string
-  CHIA_ALERTS_PUBKEY: string
+  ACHI_ALERTS_PUBKEY: string
   achi_ssl_ca: SslCa
   daemon_port: number
   daemon_ssl: SslCerts

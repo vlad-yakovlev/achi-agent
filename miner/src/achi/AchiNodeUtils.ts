@@ -11,7 +11,7 @@ export const getAchiRootPath = (): string => {
 
   achiRootPath = resolve(
     homedir(),
-    process.env['CHIA_ROOT'] || '.achi/mainnet',
+    process.env['ACHI_ROOT'] || '.achi/mainnet',
   )
 
   return achiRootPath
