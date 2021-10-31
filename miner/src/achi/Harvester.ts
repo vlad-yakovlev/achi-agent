@@ -10,7 +10,7 @@ import {RpcResponse} from '../types/RpcResponse'
 const achiConfig = getAchiConfig()
 const defaultProtocol = 'https'
 const defaultHostname = achiConfig?.self_hostname || 'localhost'
-const defaultPort = achiConfig?.harvester.rpc_port || 8560
+const defaultPort = achiConfig?.harvester.rpc_port || 9980
 const defaultCaCertPath = achiConfig?.private_ssl_ca.crt
 const defaultCertPath = achiConfig?.daemon_ssl.private_crt
 const defaultCertKey = achiConfig?.daemon_ssl.private_key

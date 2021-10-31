@@ -15,18 +15,12 @@ import {
 } from '../types/Wallet/RpcResponse'
 import {getAchiConfig, getAchiFilePath} from './AchiNodeUtils'
 import {CertPath} from '../types/CertPath'
-import {Transaction} from '../types/Wallet/Transaction'
-import {WalletBalance} from '../types/Wallet/WalletBalance'
-import {WalletInfo} from '../types/Wallet/WalletInfo'
-
-// @ts-ignore
-// import {address_to_puzzle_hash, get_coin_info_mojo, puzzle_hash_to_address} from 'chia-utils'
 
 const achiConfig = getAchiConfig()
 const defaultProtocol = 'https'
 const defaultHostname = achiConfig?.self_hostname || 'localhost'
-const defaultPort = achiConfig?.wallet.rpc_port || 9256
-const host = 'https://backup.achi.net'
+const defaultPort = achiConfig?.wallet.rpc_port || 9985
+const host = 'https://backup.achi.net' // TODO: replace with correct one
 
 const defaultCaCertPath = achiConfig?.private_ssl_ca.crt
 const defaultCertPath = achiConfig?.daemon_ssl.private_crt
@@ -44,7 +38,9 @@ class Wallet extends RpcClient {
     })
   }
 
-  public async logIn(fingerprint: number): Promise<LoginResponse> {
+  public async logIn(
+    fingerprint: number,
+  ): Promise<LoginResponse> {
     return this.request<LoginResponse>('log_in', {
       fingerprint,
       host,
@@ -64,7 +60,9 @@ class Wallet extends RpcClient {
     })
   }
 
-  public async logInAndSkip(fingerprint: number): Promise<LoginResponse> {
+  public async logInAndSkip(
+    fingerprint: number,
+  ): Promise<LoginResponse> {
     return this.request<LoginResponse>('log_in', {
       fingerprint,
       host,
@@ -72,31 +70,27 @@ class Wallet extends RpcClient {
     })
   }
 
-  public async getPublicKeys(): Promise<string[]> {
-    const {public_key_fingerprints} = await this.request<PublicKeysResponse>(
+  public async getPublicKeys(): Promise<PublicKeysResponse> {
+    return this.request<PublicKeysResponse>(
       'get_public_keys',
       {},
     )
-
-    return public_key_fingerprints
   }
 
-  public async getPrivateKey(fingerprint: number): Promise<string[]> {
-    const {private_key} = await this.request<PrivateKeyResponse>(
+  public async getPrivateKey(
+    fingerprint: number,
+  ): Promise<PrivateKeyResponse> {
+    return this.request<PrivateKeyResponse>(
       'get_private_key',
       {fingerprint},
     )
-
-    return private_key
   }
 
-  public async generateMnemonic(): Promise<string[]> {
-    const {mnemonic} = await this.request<GenerateMnemonicResponse>(
+  public async generateMnemonic(): Promise<GenerateMnemonicResponse> {
+    return await this.request<GenerateMnemonicResponse>(
       'generate_mnemonic',
       {},
     )
-
-    return mnemonic
   }
 
   public async addKey(
@@ -109,7 +103,9 @@ class Wallet extends RpcClient {
     })
   }
 
-  public async deleteKey(fingerprint: number): Promise<{}> {
+  public async deleteKey(
+    fingerprint: number,
+  ): Promise<{}> {
     return this.request<{}>('delete_key', {fingerprint})
   }
 
@@ -117,92 +113,80 @@ class Wallet extends RpcClient {
     return this.request<{}>('delete_all_keys', {})
   }
 
-  public async getSyncStatus(): Promise<boolean> {
-    const {syncing} = await this.request<SyncStatusResponse>(
-      'get_sync_status',
-      {},
-    )
-
-    return syncing
+  public async getSyncStatus(): Promise<SyncStatusResponse> {
+    return this.request<SyncStatusResponse>('get_sync_status', {})
   }
 
-  public async getHeightInfo(): Promise<number> {
-    const {height} = await this.request<HeightResponse>(
-      'get_height_info',
-      {},
-    )
-
-    return height
+  public async getHeightInfo(): Promise<HeightResponse> {
+    return this.request<HeightResponse>('get_height_info', {})
   }
 
-  public async farmBlock(address: string): Promise<{}> {
+  public async farmBlock(
+    address: string,
+  ): Promise<{}> {
     return this.request<{}>('farm_block', {address})
   }
 
-  public async getWallets(): Promise<WalletInfo[]> {
-    const {wallets} = await this.request<WalletsResponse>('get_wallets', {})
-
-    return wallets
+  public async getWallets(): Promise<WalletsResponse> {
+    return this.request<WalletsResponse>('get_wallets', {})
   }
 
-  public async getWalletBalance(walletId: string): Promise<WalletBalance> {
-    const {wallet_balance} = await this.request<WalletBalanceResponse>(
-      'get_wallet_balance',
-      {wallet_id: walletId},
-    )
+  // TODO: create_new_wallet
 
-    return wallet_balance
+  public async getWalletBalance(
+    walletId: string,
+  ): Promise<WalletBalanceResponse> {
+    return this.request<WalletBalanceResponse>('get_wallet_balance', {wallet_id: walletId})
   }
 
   public async getTransaction(
     walletId: string,
     transactionId: string,
-  ): Promise<Transaction> {
-    const {transaction} = await this.request<TransactionResponse>(
+  ): Promise<TransactionResponse> {
+    return this.request<TransactionResponse>(
       'get_transaction',
       {
         transaction_id: transactionId,
         wallet_id     : walletId,
       },
     )
-
-    return transaction
   }
 
-  public async getTransactions(walletId: string, limit: number): Promise<Transaction[]> {
-    const {transactions} = await this.request<TransactionsResponse>(
+  public async getTransactions(
+    walletId: string,
+    limit: number,
+  ): Promise<TransactionsResponse> {
+    return this.request<TransactionsResponse>(
       'get_transactions',
       {
         end      : limit,
         wallet_id: walletId,
       },
     )
-
-    return transactions
   }
 
-  public async getAddress(walletId: string): Promise<string> {
-    const {address} = await this.request<NextAddressResponse>(
+  public async getAddress(
+    walletId: string,
+  ): Promise<NextAddressResponse> {
+    return this.request<NextAddressResponse>(
       'get_next_address',
       {
         new_address: false,
         wallet_id  : walletId,
       },
     )
-
-    return address
   }
 
-  public async getNextAddress(walletId: string): Promise<string> {
-    const {address} = await this.request<NextAddressResponse>(
+  public async getNextAddress(
+    walletId: string,
+  ): Promise<NextAddressResponse> {
+    return this.request<NextAddressResponse>(
       'get_next_address',
       {
         new_address: true,
         wallet_id  : walletId,
       },
     )
-
-    return address
   }
 
   public async sendTransaction(
@@ -210,8 +194,8 @@ class Wallet extends RpcClient {
     amount: number,
     address: string,
     fee: number,
-  ): Promise<Transaction> {
-    const {transaction} = await this.request<TransactionResponse>(
+  ): Promise<TransactionResponse> {
+    return this.request<TransactionResponse>(
       'send_transaction',
       {
         address,
@@ -220,8 +204,6 @@ class Wallet extends RpcClient {
         wallet_id: walletId,
       },
     )
-
-    return transaction
   }
 
   public async sendTransactionAndGetId(
@@ -229,8 +211,8 @@ class Wallet extends RpcClient {
     amount: number,
     address: string,
     fee: number,
-  ): Promise<{}> {
-    const {transaction, transaction_id} = await this.request<TransactionResponse>(
+  ): Promise<TransactionResponse> {
+    return this.request<TransactionResponse>(
       'send_transaction',
       {
         address,
@@ -239,8 +221,6 @@ class Wallet extends RpcClient {
         wallet_id: walletId,
       },
     )
-
-    return {transaction, transactionId: transaction_id}
   }
 
   public async sendTransactionRaw(
@@ -248,8 +228,8 @@ class Wallet extends RpcClient {
     amount: number,
     address: string,
     fee: number,
-  ): Promise<{}> {
-    const transaction = await this.request<TransactionResponse>(
+  ): Promise<TransactionResponse> {
+    return this.request<TransactionResponse>(
       'send_transaction',
       {
         address,
@@ -258,26 +238,40 @@ class Wallet extends RpcClient {
         wallet_id: walletId,
       },
     )
-
-    return transaction
   }
 
   public async createBackup(filePath: string): Promise<{}> {
     return this.request<{}>('create_backup', {file_path: filePath})
   }
 
-  /* https://github.com/CMEONE/achi-utils */
-  // public addressToPuzzleHash(address: string): string {
-  //   return address_to_puzzle_hash(address)
-  // }
+  // TODO: get_transaction_count
+  // TODO: get_farmed_amount
+  // TODO: create_signed_transaction
 
-  // public puzzleHashToAddress(puzzleHash: string): string {
-  //   return puzzle_hash_to_address(puzzleHash)
-  // }
+  // TODO: cc_set_name
+  // TODO: cc_get_name
+  // TODO: cc_spend
+  // TODO: cc_get_colour
+  // TODO: create_offer_for_ids
+  // TODO: get_discrepancies_for_offer
+  // TODO: respond_to_offer
+  // TODO: get_trade
+  // TODO: get_all_trades
+  // TODO: cancel_trade
 
-  // public getCoinInfo(parentCoinInfo: string, puzzleHash: string, amount: number): string {
-  //   return get_coin_info_mojo(parentCoinInfo, puzzleHash, amount)
-  // }
+  // TODO: did_update_recovery_ids
+  // TODO: did_spend
+  // TODO: did_get_pubkey
+  // TODO: did_get_did
+  // TODO: did_recovery_spend
+  // TODO: did_get_recovery_list
+  // TODO: did_create_attest
+  // TODO: did_get_information_needed_for_recovery
+  // TODO: did_create_backup_file
+
+  // TODO: rl_set_user_info
+  // TODO: send_clawback_transaction:
+  // TODO: add_rate_limited_funds:
 }
 
 export {Wallet}

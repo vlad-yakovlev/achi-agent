@@ -1,8 +1,6 @@
 import {AchiOptions, RpcClient} from './RpcClient'
 import {getAchiConfig, getAchiFilePath} from './AchiNodeUtils'
 import {
-  LoginLinkResponse,
-  PoolStateResponse,
   RewardTargetResponse,
   SignagePointResponse,
   SignagePointsResponse,
@@ -13,7 +11,7 @@ import {RpcResponse} from '../types/RpcResponse'
 const achiConfig = getAchiConfig()
 const defaultProtocol = 'https'
 const defaultHostname = achiConfig?.self_hostname || 'localhost'
-const defaultPort = achiConfig?.farmer.rpc_port || 8559
+const defaultPort = achiConfig?.farmer.rpc_port || 9970
 const defaultCaCertPath = achiConfig?.private_ssl_ca.crt
 const defaultCertPath = achiConfig?.daemon_ssl.private_crt
 const defaultCertKey = achiConfig?.daemon_ssl.private_key
@@ -57,28 +55,6 @@ class Farmer extends RpcClient {
     return this.request<RpcResponse>('set_reward_targets', {
       farmer_target: farmerTarget,
       pool_target  : poolTarget,
-    })
-  }
-
-  public async getPoolState(): Promise<PoolStateResponse> {
-    return this.request<PoolStateResponse>('get_pool_state', {})
-  }
-
-  public async setPayoutInstructions(
-    launcher_id: string,
-    payout_instructions: string,
-  ): Promise<RpcResponse> {
-    return this.request<RpcResponse>('set_payout_instructions', {
-      launcher_id        : launcher_id,
-      payout_instructions: payout_instructions,
-    })
-  }
-
-  public async getPoolLoginLink(
-    launcher_id: string,
-  ): Promise<LoginLinkResponse> {
-    return this.request<LoginLinkResponse>('get_pool_login_link', {
-      launcher_id: launcher_id,
     })
   }
 }
