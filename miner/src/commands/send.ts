@@ -1,11 +1,11 @@
 // @ts-ignore
 require('dotenv-flow').config()
 
-import {Farmer} from './achi/Farmer'
-import {FullNode} from './achi/FullNode'
-import {Harvester} from './achi/Harvester'
-import {Telegram} from './telegram/Telegram'
-import {Wallet} from './achi/Wallet'
+import {Farmer} from '../achi/Farmer'
+import {FullNode} from '../achi/FullNode'
+import {Harvester} from '../achi/Harvester'
+import {Telegram} from '../telegram/Telegram'
+import {Wallet} from '../achi/Wallet'
 
 (async () => {
   try {

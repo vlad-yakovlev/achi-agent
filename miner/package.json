@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "ts-node src/bot.ts",
-    "lint": "npx eslint --ext .js,.ts --ignore-path .eslintignore ."
+    "start": "ts-node src/commands/send.ts",
+    "lint": "eslint --ext .js,.ts --ignore-path .eslintignore ."
   },
   "dependencies": {
     "@types/node": "^14.17.15",
