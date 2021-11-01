@@ -37,6 +37,7 @@ module.exports = {
     }],
 
     '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/no-shadow'      : [2],
     '@typescript-eslint/no-unused-vars' : [2, {'argsIgnorePattern': '^_'}],
     'arrow-parens'                      : [2, 'as-needed'],
 
@@ -99,7 +100,7 @@ module.exports = {
     'no-extra-semi'               : 1,
     'no-mixed-spaces-and-tabs'    : [1],
     'no-multi-spaces'             : [2, {'exceptions': {'AssignmentExpression': true, 'Property': true}}],
-    'no-shadow'                   : [2],
+    'no-shadow'                   : [0],
     'no-spaced-func'              : [1],
     'no-unused-expressions'       : [1],
     'no-unused-vars'              : [1],

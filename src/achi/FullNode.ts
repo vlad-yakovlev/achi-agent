@@ -13,6 +13,7 @@ import {
 import {getAchiConfig, getAchiFilePath} from './AchiNodeUtils'
 import {Block} from '../types/FullNode/Block'
 import {CertPath} from '../types/CertPath'
+import {RpcResponse} from '../types/RpcResponse'
 
 const achiConfig = getAchiConfig()
 const defaultProtocol = 'https'
@@ -110,9 +111,8 @@ class FullNode extends RpcClient {
 
   // TODO: get_initial_freeze_period
 
-  // TODO: add response type
-  public async getNetworkInfo(): Promise<{}> {
-    return this.request<{}>('get_network_info', {})
+  public async getNetworkInfo(): Promise<RpcResponse> {
+    return this.request<RpcResponse>('get_network_info', {})
   }
 
   public async getUnspentCoins(
@@ -140,14 +140,12 @@ class FullNode extends RpcClient {
 
   // TODO: push_tx
 
-  // TODO: add response type
-  public async getAllMempoolTxIds(): Promise<{}> {
-    return this.request<{}>('get_all_mempool_tx_ids', {})
+  public async getAllMempoolTxIds(): Promise<RpcResponse> {
+    return this.request<RpcResponse>('get_all_mempool_tx_ids', {})
   }
 
-  // TODO: add response type
-  public async getAllMempoolItems(): Promise<{}> {
-    return this.request<{}>('get_all_mempool_items', {})
+  public async getAllMempoolItems(): Promise<RpcResponse> {
+    return this.request<RpcResponse>('get_all_mempool_items', {})
   }
 
   // TODO: get_mempool_item_by_tx_id

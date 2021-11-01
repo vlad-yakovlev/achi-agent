@@ -27,6 +27,7 @@ export interface AddKeyResponse extends RpcResponse {
 }
 
 export interface SyncStatusResponse extends RpcResponse {
+    synced: boolean
     syncing: boolean
 }
 

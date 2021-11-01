@@ -1,24 +1,22 @@
-// @ts-ignore
-require('dotenv-flow').config()
-
 import {Farmer} from '../achi/Farmer'
 import {FullNode} from '../achi/FullNode'
+import {getMinerConfig} from '../config'
 import {Harvester} from '../achi/Harvester'
 import {MicroTelegram} from '../telegram/MicroTelegram'
+import {MinerStats} from '../types/MinerStats'
 import {Wallet} from '../achi/Wallet'
 
 (async () => {
   try {
+    const minerConfig = getMinerConfig()
+    const microTelegram = new MicroTelegram(minerConfig.telegram.botToken)
+
     const farmer = new Farmer()
     const fullNode = new FullNode()
     const harvester = new Harvester()
     const wallet = new Wallet()
 
-    const microTelegram = new MicroTelegram({
-      token: process.env.BOT_TOKEN!,
-    })
-
-    const data = {
+    const minerStats: MinerStats = {
       farmer: {
         connections  : await farmer.getConnections(),
         signagePoints: await farmer.getSignagePoints(),
@@ -50,10 +48,15 @@ import {Wallet} from '../achi/Wallet'
       },
     }
 
-    await microTelegram.sendDocument(process.env.MINER_BOTS_CHAT_ID!, 'achi.json', Buffer.from(JSON.stringify(data)))
+    await microTelegram.sendDocument(
+      minerConfig.telegram.minerBotsChatId,
+      'achi.json',
+      Buffer.from(JSON.stringify(minerStats)),
+    )
+
+    process.exit(0)
   } catch(error) {
     console.error(error)
+    process.exit(1)
   }
-
-  process.exit(0)
 })()

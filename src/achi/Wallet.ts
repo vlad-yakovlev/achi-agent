@@ -17,6 +17,7 @@ import {
 } from '../types/Wallet/RpcResponse'
 import {getAchiConfig, getAchiFilePath} from './AchiNodeUtils'
 import {CertPath} from '../types/CertPath'
+import {RpcResponse} from '../types/RpcResponse'
 
 const achiConfig = getAchiConfig()
 const defaultProtocol = 'https'
@@ -107,12 +108,12 @@ class Wallet extends RpcClient {
 
   public async deleteKey(
     fingerprint: number,
-  ): Promise<{}> {
-    return this.request<{}>('delete_key', {fingerprint})
+  ): Promise<RpcResponse> {
+    return this.request<RpcResponse>('delete_key', {fingerprint})
   }
 
-  public async deleteAllKeys(): Promise<{}> {
-    return this.request<{}>('delete_all_keys', {})
+  public async deleteAllKeys(): Promise<RpcResponse> {
+    return this.request<RpcResponse>('delete_all_keys', {})
   }
 
   public async getSyncStatus(): Promise<SyncStatusResponse> {
@@ -125,8 +126,8 @@ class Wallet extends RpcClient {
 
   public async farmBlock(
     address: string,
-  ): Promise<{}> {
-    return this.request<{}>('farm_block', {address})
+  ): Promise<RpcResponse> {
+    return this.request<RpcResponse>('farm_block', {address})
   }
 
   public async getWallets(): Promise<WalletsResponse> {
@@ -244,8 +245,8 @@ class Wallet extends RpcClient {
     )
   }
 
-  public async createBackup(filePath: string): Promise<{}> {
-    return this.request<{}>('create_backup', {file_path: filePath})
+  public async createBackup(filePath: string): Promise<RpcResponse> {
+    return this.request<RpcResponse>('create_backup', {file_path: filePath})
   }
 
   public async getTransactionCount(

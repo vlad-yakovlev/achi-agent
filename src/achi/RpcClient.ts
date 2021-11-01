@@ -2,8 +2,9 @@ import {Agent} from 'https'
 import axios from 'axios'
 import {ConnectionResponse} from '../types/RpcClient/RpcResponse'
 import {readFileSync} from 'fs'
+import {RpcResponse} from '../types/RpcResponse'
 
-type Protocol = 'https' | 'http';
+type Protocol = 'https' | 'http'
 
 interface AchiOptions {
   protocol: Protocol
@@ -15,10 +16,10 @@ interface AchiOptions {
 }
 
 class RpcClient {
-  private readonly protocol: Protocol;
-  private readonly hostname: string;
-  private readonly port: number;
-  private readonly agent: Agent;
+  private readonly protocol: Protocol
+  private readonly hostname: string
+  private readonly port: number
+  private readonly agent: Agent
 
   public constructor(options: AchiOptions) {
     this.protocol = options.protocol
@@ -52,12 +53,11 @@ class RpcClient {
     return this.request<ConnectionResponse>('get_connections', {})
   }
 
-  // TODO: add response type
   public async openConnection(
     host: string,
     port: string,
-  ): Promise<{}> {
-    return this.request<{}>('open_connection', {
+  ): Promise<RpcResponse> {
+    return this.request<RpcResponse>('open_connection', {
       host,
       port,
     })

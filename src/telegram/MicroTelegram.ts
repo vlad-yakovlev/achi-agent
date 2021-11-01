@@ -1,19 +1,35 @@
-import axios from 'axios'
+import axios, {Axios} from 'axios'
 import FormData from 'form-data'
 
-interface MicroTelegramOptions {
-  token: string
-}
-
 export class MicroTelegram {
-  private token: string
+  private axios: Axios
+  private fileAxios: Axios
 
-  constructor(options: MicroTelegramOptions) {
-    this.token = options.token
+  constructor(token: string) {
+    this.axios = axios.create({
+      baseURL: `https://api.telegram.org/bot${token}/`,
+    })
+
+    this.fileAxios = axios.create({
+      baseURL: `https://api.telegram.org/file/bot${token}/`,
+    })
+  }
+
+  async sendMessage(
+    chatId: number,
+    text: string,
+  ) {
+    return await this.axios.get('sendMessage', {
+      params: {
+        chat_id   : chatId,
+        parse_mode: 'Markdown',
+        text,
+      },
+    })
   }
 
   async sendDocument(
-    chatId: string,
+    chatId: number,
     filename: string,
     content: Buffer,
   ) {
@@ -21,7 +37,7 @@ export class MicroTelegram {
 
     formData.append('document', content, filename)
 
-    await axios.post(`https://api.telegram.org/bot${this.token}/sendDocument`, formData, {
+    return await this.axios.post('sendDocument', formData, {
       headers: {
         'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`,
       },
@@ -30,5 +46,21 @@ export class MicroTelegram {
         chat_id: chatId,
       },
     })
+  }
+
+  async sendSticker(
+    chatId: number,
+    sticker: string,
+  ) {
+    return await this.axios.get('sendSticker', {
+      params: {
+        chat_id: chatId,
+        sticker,
+      },
+    })
+  }
+
+  async downloadFile(filePath: string) {
+    return (await this.fileAxios.get(filePath)).data
   }
 }

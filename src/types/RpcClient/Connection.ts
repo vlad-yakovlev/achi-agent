@@ -1,3 +1,7 @@
+export enum ConnectionType {
+    FULL_NODE = 1,
+}
+
 export interface Connection {
     bytes_read: bigint
     bytes_written: bigint
@@ -11,5 +15,5 @@ export interface Connection {
     peer_host: string
     peer_port: number
     peer_server_port: string
-    type: number
+    type: ConnectionType
 }
