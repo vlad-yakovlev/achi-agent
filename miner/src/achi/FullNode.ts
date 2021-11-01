@@ -66,7 +66,9 @@ class FullNode extends RpcClient {
     })
   }
 
-  public async getBlockRecord(hash: string): Promise<BlockRecordResponse> {
+  public async getBlockRecord(
+    hash: string,
+  ): Promise<BlockRecordResponse> {
     return this.request<BlockRecordResponse>('get_block_record', {
       header_hash: hash,
     })
@@ -127,7 +129,9 @@ class FullNode extends RpcClient {
 
   // TODO: get_coin_records_by_puzzle_hashes
 
-  public async getCoinRecordByName(name: string): Promise<CoinRecordResponse> {
+  public async getCoinRecordByName(
+    name: string,
+  ): Promise<CoinRecordResponse> {
     return this.request<CoinRecordResponse>('get_coin_record_by_name', {
       name,
     })
@@ -135,8 +139,16 @@ class FullNode extends RpcClient {
 
   // TODO: push_tx
 
-  // TODO: get_all_mempool_tx_ids
-  // TODO: get_all_mempool_items
+  // TODO: add response type
+  public async getAllMempoolTxIds(): Promise<{}> {
+    return this.request<{}>('get_all_mempool_tx_ids', {})
+  }
+
+  // TODO: add response type
+  public async getAllMempoolItems(): Promise<{}> {
+    return this.request<{}>('get_all_mempool_items', {})
+  }
+
   // TODO: get_mempool_item_by_tx_id
 }
 
