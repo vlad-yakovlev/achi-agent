@@ -4,7 +4,7 @@ require('dotenv-flow').config()
 import {Farmer} from './achi/Farmer'
 import {FullNode} from './achi/FullNode'
 import {Harvester} from './achi/Harvester'
-import {Telegram} from './Telegram'
+import {Telegram} from './telegram/Telegram'
 import {Wallet} from './achi/Wallet'
 
 (async () => {
@@ -35,7 +35,12 @@ import {Wallet} from './achi/Wallet'
       wallet: {
         heightInfo: await wallet.getHeightInfo(),
         syncStatus: await wallet.getSyncStatus(),
-        wallets   : await wallet.getWallets(),
+        wallets   : Promise.all((await wallet.getWallets()).wallets.map(async walletItem => ({
+          ...walletItem,
+          address         : await wallet.getAddress(walletItem.id),
+          balance         : await wallet.getWalletBalance(walletItem.id),
+          transactionCount: await wallet.getTransactionCount(walletItem.id),
+        }))),
       },
     }
 

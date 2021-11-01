@@ -134,13 +134,13 @@ class Wallet extends RpcClient {
   // TODO: create_new_wallet
 
   public async getWalletBalance(
-    walletId: string,
+    walletId: number,
   ): Promise<WalletBalanceResponse> {
     return this.request<WalletBalanceResponse>('get_wallet_balance', {wallet_id: walletId})
   }
 
   public async getTransaction(
-    walletId: string,
+    walletId: number,
     transactionId: string,
   ): Promise<TransactionResponse> {
     return this.request<TransactionResponse>(
@@ -153,20 +153,22 @@ class Wallet extends RpcClient {
   }
 
   public async getTransactions(
-    walletId: string,
-    limit: number,
+    walletId: number,
+    start?: number,
+    end?: number,
   ): Promise<TransactionsResponse> {
     return this.request<TransactionsResponse>(
       'get_transactions',
       {
-        end      : limit,
+        end,
+        start,
         wallet_id: walletId,
       },
     )
   }
 
   public async getAddress(
-    walletId: string,
+    walletId: number,
   ): Promise<NextAddressResponse> {
     return this.request<NextAddressResponse>(
       'get_next_address',
@@ -178,7 +180,7 @@ class Wallet extends RpcClient {
   }
 
   public async getNextAddress(
-    walletId: string,
+    walletId: number,
   ): Promise<NextAddressResponse> {
     return this.request<NextAddressResponse>(
       'get_next_address',
@@ -190,7 +192,7 @@ class Wallet extends RpcClient {
   }
 
   public async sendTransaction(
-    walletId: string,
+    walletId: number,
     amount: number,
     address: string,
     fee: number,
@@ -207,7 +209,7 @@ class Wallet extends RpcClient {
   }
 
   public async sendTransactionAndGetId(
-    walletId: string,
+    walletId: number,
     amount: number,
     address: string,
     fee: number,
@@ -224,7 +226,7 @@ class Wallet extends RpcClient {
   }
 
   public async sendTransactionRaw(
-    walletId: string,
+    walletId: number,
     amount: number,
     address: string,
     fee: number,
@@ -244,8 +246,18 @@ class Wallet extends RpcClient {
     return this.request<{}>('create_backup', {file_path: filePath})
   }
 
-  // TODO: get_transaction_count
-  // TODO: get_farmed_amount
+  // TODO: add response type
+  public async getTransactionCount(
+    walletId: number,
+  ): Promise<{}> {
+    return this.request<{}>('get_transaction_count', {wallet_id: walletId})
+  }
+
+  // TODO: add response type
+  public async getFarmedAmount(): Promise<{}> {
+    return this.request<{}>('get_farmed_amount', {})
+  }
+
   // TODO: create_signed_transaction
 
   // TODO: cc_set_name

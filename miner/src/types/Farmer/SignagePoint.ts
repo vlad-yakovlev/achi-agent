@@ -1,8 +1,9 @@
 export interface SignagePoint {
-  challenge_hash: string
   challenge_chain_sp: string
-  reward_chain_sp: string
+  challenge_hash: string
   difficulty: number
-  sub_slot_iters: number
+  reward_chain_sp: string
   signage_point_index: number
+  sub_slot_iters: number
+  timelord_reward_puzzle_hash: number
 }
