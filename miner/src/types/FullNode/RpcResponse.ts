@@ -3,7 +3,6 @@ import {BlockchainState} from './BlockchainState'
 import {BlockHeader} from './BlockHeader'
 import {BlockRecord} from './BlockRecord'
 import {CoinRecord} from './CoinRecord'
-import {Connection} from '../Shared/Connection'
 import {RpcResponse} from '../RpcResponse'
 
 export interface BlockchainStateResponse extends RpcResponse {
@@ -14,9 +13,9 @@ export interface UnfinishedBlockHeadersResponse extends RpcResponse {
     headers: BlockHeader[]
 }
 
-export interface HeaderResponse extends RpcResponse {
-    header: BlockHeader
-}
+// export interface HeaderResponse extends RpcResponse {
+//     header: BlockHeader
+// }
 
 export interface BlocksResponse<T extends Block> extends RpcResponse {
     blocks: T[]
@@ -37,6 +36,7 @@ export interface CoinResponse extends RpcResponse {
 export interface CoinRecordResponse extends RpcResponse {
     coin_record: CoinRecord
 }
+
 export interface AdditionsAndRemovalsResponse extends RpcResponse {
     additions: Array<CoinRecord>
     removals: Array<CoinRecord>
@@ -44,8 +44,4 @@ export interface AdditionsAndRemovalsResponse extends RpcResponse {
 
 export interface NetspaceResponse extends RpcResponse {
     space: number
-}
-
-export interface ConnectionResponse extends RpcResponse{
-    connections: Array<Connection>
 }

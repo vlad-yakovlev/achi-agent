@@ -1,4 +1,4 @@
-export interface Connection{
+export interface Connection {
     bytes_read: bigint
     bytes_written: bigint
     creation_time: number

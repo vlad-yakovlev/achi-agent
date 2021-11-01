@@ -1,5 +1,6 @@
 import {Agent} from 'https'
 import axios from 'axios'
+import {ConnectionResponse} from '../types/RpcClient/RpcResponse'
 import {readFileSync} from 'fs'
 
 type Protocol = 'https' | 'http';
@@ -47,9 +48,8 @@ class RpcClient {
     return data
   }
 
-  // TODO: add response type
-  public async getConnections(): Promise<{}> {
-    return this.request<{}>('get_connections', {})
+  public async getConnections(): Promise<ConnectionResponse> {
+    return this.request<ConnectionResponse>('get_connections', {})
   }
 
   // TODO: add response type

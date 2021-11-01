@@ -25,8 +25,6 @@ import {Wallet} from './achi/Wallet'
       },
 
       fullNode: {
-        allMempoolItems: await fullNode.getAllMempoolItems(),
-        allMempoolTxIds: await fullNode.getAllMempoolTxIds(),
         blockchainState: await fullNode.getBlockchainState(),
         connections    : await fullNode.getConnections(),
       },
