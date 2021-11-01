@@ -1,9 +1,9 @@
 {
-  "name": "raxee-bot",
-  "version": "0.1.0",
+  "name": "achi-telegram",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
-    "send": "ts-node src/commands/send.ts",
+    "send-stats": "ts-node src/commands/send-stats.ts",
     "lint": "eslint --ext .js,.ts --ignore-path .eslintignore ."
   },
   "dependencies": {

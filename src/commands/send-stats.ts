@@ -4,7 +4,7 @@ require('dotenv-flow').config()
 import {Farmer} from '../achi/Farmer'
 import {FullNode} from '../achi/FullNode'
 import {Harvester} from '../achi/Harvester'
-import {Telegram} from '../telegram/Telegram'
+import {MicroTelegram} from '../telegram/MicroTelegram'
 import {Wallet} from '../achi/Wallet'
 
 (async () => {
@@ -14,7 +14,7 @@ import {Wallet} from '../achi/Wallet'
     const harvester = new Harvester()
     const wallet = new Wallet()
 
-    const telegram = new Telegram({
+    const microTelegram = new MicroTelegram({
       token: process.env.BOT_TOKEN!,
     })
 
@@ -50,7 +50,7 @@ import {Wallet} from '../achi/Wallet'
       },
     }
 
-    await telegram.sendDocument(process.env.CHAT_ID!, 'achi.json', Buffer.from(JSON.stringify(data)))
+    await microTelegram.sendDocument(process.env.MINER_BOTS_CHAT_ID!, 'achi.json', Buffer.from(JSON.stringify(data)))
   } catch(error) {
     console.error(error)
   }

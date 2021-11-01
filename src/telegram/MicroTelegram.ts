@@ -1,14 +1,14 @@
 import axios from 'axios'
 import FormData from 'form-data'
 
-interface TelegramOptions {
+interface MicroTelegramOptions {
   token: string
 }
 
-export class Telegram {
+export class MicroTelegram {
   private token: string
 
-  constructor(options: TelegramOptions) {
+  constructor(options: MicroTelegramOptions) {
     this.token = options.token
   }
 
