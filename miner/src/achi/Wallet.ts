@@ -1,6 +1,7 @@
 import {AchiOptions, RpcClient} from './RpcClient'
 import {
   AddKeyResponse,
+  FarmedAmountResponse,
   GenerateMnemonicResponse,
   HeightResponse,
   LoginResponse,
@@ -253,9 +254,8 @@ class Wallet extends RpcClient {
     return this.request<TransactionCountResponse>('get_transaction_count', {wallet_id: walletId})
   }
 
-  // TODO: add response type
-  public async getFarmedAmount(): Promise<{}> {
-    return this.request<{}>('get_farmed_amount', {})
+  public async getFarmedAmount(): Promise<FarmedAmountResponse> {
+    return this.request<FarmedAmountResponse>('get_farmed_amount', {})
   }
 
   // TODO: create_signed_transaction

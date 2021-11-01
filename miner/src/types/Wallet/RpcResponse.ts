@@ -61,3 +61,12 @@ export interface TransactionCountResponse extends RpcResponse {
     wallet_id: number
     count: number
 }
+
+export interface FarmedAmountResponse extends RpcResponse {
+    'farmed_amount': number
+    'farmer_reward_amount': number
+    'fee_amount': number
+    'last_height_farmed': number
+    'pool_reward_amount': number
+    'timelord_reward_amount': number
+}
