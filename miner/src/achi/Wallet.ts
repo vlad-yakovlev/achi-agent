@@ -8,6 +8,7 @@ import {
   PrivateKeyResponse,
   PublicKeysResponse,
   SyncStatusResponse,
+  TransactionCountResponse,
   TransactionResponse,
   TransactionsResponse,
   WalletBalanceResponse,
@@ -246,11 +247,10 @@ class Wallet extends RpcClient {
     return this.request<{}>('create_backup', {file_path: filePath})
   }
 
-  // TODO: add response type
   public async getTransactionCount(
     walletId: number,
-  ): Promise<{}> {
-    return this.request<{}>('get_transaction_count', {wallet_id: walletId})
+  ): Promise<TransactionCountResponse> {
+    return this.request<TransactionCountResponse>('get_transaction_count', {wallet_id: walletId})
   }
 
   // TODO: add response type

@@ -56,3 +56,8 @@ export interface NextAddressResponse extends RpcResponse {
     wallet_id: number
     address: string
 }
+
+export interface TransactionCountResponse extends RpcResponse {
+    wallet_id: number
+    count: number
+}

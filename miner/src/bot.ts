@@ -33,9 +33,11 @@ import {Wallet} from './achi/Wallet'
       },
 
       wallet: {
-        heightInfo: await wallet.getHeightInfo(),
-        syncStatus: await wallet.getSyncStatus(),
-        wallets   : await Promise.all((await wallet.getWallets()).wallets.map(async walletItem => ({
+        farmedAmount: await wallet.getFarmedAmount(),
+        heightInfo  : await wallet.getHeightInfo(),
+        syncStatus  : await wallet.getSyncStatus(),
+
+        wallets: await Promise.all((await wallet.getWallets()).wallets.map(async walletItem => ({
           ...walletItem,
           address         : await wallet.getAddress(walletItem.id),
           balance         : await wallet.getWalletBalance(walletItem.id),
