@@ -46,6 +46,25 @@ class RpcClient {
 
     return data
   }
+
+  // TODO: add response type
+  public async getConnections(): Promise<{}> {
+    return this.request<{}>('get_connections', {})
+  }
+
+  // TODO: add response type
+  public async openConnection(
+    host: string,
+    port: string,
+  ): Promise<{}> {
+    return this.request<{}>('open_connection', {
+      host,
+      port,
+    })
+  }
+
+  // TODO: close_connection
+  // TODO: stop_node
 }
 
 export {AchiOptions, RpcClient}

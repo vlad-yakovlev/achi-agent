@@ -20,6 +20,7 @@ import {Wallet} from './achi/Wallet'
 
     const data = {
       farmer: {
+        connections  : await farmer.getConnections(),
         signagePoints: await farmer.getSignagePoints(),
       },
 
@@ -27,14 +28,17 @@ import {Wallet} from './achi/Wallet'
         allMempoolItems: await fullNode.getAllMempoolItems(),
         allMempoolTxIds: await fullNode.getAllMempoolTxIds(),
         blockchainState: await fullNode.getBlockchainState(),
+        connections    : await fullNode.getConnections(),
       },
 
       harvester: {
+        connections    : await harvester.getConnections(),
         plotDirectories: await harvester.getPlotDirectories(),
         plots          : await harvester.getPlots(),
       },
 
       wallet: {
+        connections : await wallet.getConnections(),
         farmedAmount: await wallet.getFarmedAmount(),
         heightInfo  : await wallet.getHeightInfo(),
         syncStatus  : await wallet.getSyncStatus(),

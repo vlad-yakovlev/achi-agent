@@ -110,6 +110,7 @@ class FullNode extends RpcClient {
 
   // TODO: get_initial_freeze_period
 
+  // TODO: add response type
   public async getNetworkInfo(): Promise<{}> {
     return this.request<{}>('get_network_info', {})
   }
