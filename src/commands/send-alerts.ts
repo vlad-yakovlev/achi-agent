@@ -10,8 +10,10 @@ const validateLastStats = (lastStats: LastStats) => {
   const config = getConfig()
   const errors = [] as string[]
 
-  if(differenceInMinutes(Date.now(), lastStats.date * 1000) > config.thresholds.lastUpdateDiffInMinutes) {
-    errors.push(`hasn't send the stats for the last ${config.thresholds.lastUpdateDiffInMinutes} minutes`)
+  const updateDiff = differenceInMinutes(Date.now(), lastStats.date * 1000)
+
+  if(updateDiff > config.thresholds.lastUpdateDiffInMinutes) {
+    errors.push(`hasn't send the stats for the last ${updateDiff} minutes`)
   }
 
   if(!lastStats.stats.fullNode.blockchainState.blockchain_state.sync.synced) {
@@ -59,7 +61,7 @@ const validateLastStats = (lastStats: LastStats) => {
 
       R.map(minerName => {
         return validateLastStats(session.lastStats[minerName])
-          .map(error => `🚨 *${minerName}* ${error} 🚨`)
+          .map(error => `🚨 *${minerName}* ${error}`)
       }),
 
       R.sort((left, right) => left.localeCompare(right)),
