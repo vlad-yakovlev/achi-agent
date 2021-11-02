@@ -59,7 +59,7 @@ const validateLastStats = (lastStats: LastStats) => {
 
       R.map(minerName => {
         return validateLastStats(session.lastStats[minerName])
-          .map(error => `🚨 *${minerName}* ${error}`)
+          .map(error => `🚨 *${minerName}* ${error} 🚨`)
       }),
 
       R.sort((left, right) => left.localeCompare(right)),
@@ -71,13 +71,10 @@ const validateLastStats = (lastStats: LastStats) => {
         config.telegram.controlChatId,
         'CAACAgIAAx0CZEClpAADe2GAYtBcW7WfF2-9ZdvNsBmYbetEAAI-AwACWuOKF0G2pX4B9gMsIQQ',
       )
-    }
 
-    // eslint-disable-next-line fp/no-loops
-    for(let error of errors) {
       await microTelegram.sendMessage(
         config.telegram.controlChatId,
-        error,
+        errors.join('\n'),
       )
     }
 
