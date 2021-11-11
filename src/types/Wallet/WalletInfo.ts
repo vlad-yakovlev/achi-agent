@@ -1,8 +1,8 @@
-import {WalletType} from './WalletType'
+import { WalletType } from './WalletType';
 
 export interface WalletInfo {
-    data: Object
-    id: number
-    name: string
-    type: WalletType
+  data: Object
+  id: number
+  name: string
+  type: WalletType
 }

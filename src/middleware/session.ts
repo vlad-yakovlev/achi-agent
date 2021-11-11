@@ -1,7 +1,7 @@
-import {MiddlewareFn, session} from 'grammy'
-import {ContextWithSession} from '../types/Storage'
-import {FileAdapter} from '@satont/grammy-file-storage'
-import path from 'path'
+import { MiddlewareFn, session } from 'grammy';
+import { FileAdapter } from '@satont/grammy-file-storage';
+import path from 'path';
+import { ContextWithSession } from '../types/Storage';
 
 export const getSessionMiddleware = (): MiddlewareFn<ContextWithSession> => session({
   getSessionKey: () => 'root',
@@ -13,4 +13,4 @@ export const getSessionMiddleware = (): MiddlewareFn<ContextWithSession> => sess
   storage: new FileAdapter({
     dirName: path.resolve(__dirname, '../../db'),
   }),
-})
+});

@@ -1,16 +1,16 @@
-import {Block} from './Block'
-import {BlockchainState} from './BlockchainState'
-import {BlockHeader} from './BlockHeader'
-import {BlockRecord} from './BlockRecord'
-import {CoinRecord} from './CoinRecord'
-import {RpcResponse} from '../RpcResponse'
+import { Block } from './Block';
+import { BlockchainState } from './BlockchainState';
+import { BlockHeader } from './BlockHeader';
+import { BlockRecord } from './BlockRecord';
+import { CoinRecord } from './CoinRecord';
+import { RpcResponse } from '../RpcResponse';
 
 export interface BlockchainStateResponse extends RpcResponse {
-    blockchain_state: BlockchainState
+  blockchain_state: BlockchainState
 }
 
 export interface UnfinishedBlockHeadersResponse extends RpcResponse {
-    headers: BlockHeader[]
+  headers: BlockHeader[]
 }
 
 // export interface HeaderResponse extends RpcResponse {
@@ -18,30 +18,30 @@ export interface UnfinishedBlockHeadersResponse extends RpcResponse {
 // }
 
 export interface BlocksResponse<T extends Block> extends RpcResponse {
-    blocks: T[]
+  blocks: T[]
 }
 
 export interface BlockResponse extends RpcResponse {
-    block: Block
+  block: Block
 }
 
 export interface BlockRecordResponse extends RpcResponse {
-    block_record: BlockRecord
+  block_record: BlockRecord
 }
 
 export interface CoinResponse extends RpcResponse {
-    coin_records: Array<CoinRecord>
+  coin_records: Array<CoinRecord>
 }
 
 export interface CoinRecordResponse extends RpcResponse {
-    coin_record: CoinRecord
+  coin_record: CoinRecord
 }
 
 export interface AdditionsAndRemovalsResponse extends RpcResponse {
-    additions: Array<CoinRecord>
-    removals: Array<CoinRecord>
+  additions: Array<CoinRecord>
+  removals: Array<CoinRecord>
 }
 
 export interface NetspaceResponse extends RpcResponse {
-    space: number
+  space: number
 }

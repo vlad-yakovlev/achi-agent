@@ -1,3 +1,3 @@
 export enum WalletType {
-    STANDARD_WALLET = 0,
+  STANDARD_WALLET = 0,
 }

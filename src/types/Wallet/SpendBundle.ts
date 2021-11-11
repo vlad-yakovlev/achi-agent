@@ -1,6 +1,6 @@
-import {CoinSolution} from './CoinSolution'
+import { CoinSolution } from './CoinSolution';
 
 export interface SpendBundle {
-    coin_solutions: CoinSolution[]
-    aggregated_signature: string
+  coin_solutions: CoinSolution[]
+  aggregated_signature: string
 }

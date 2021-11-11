@@ -1,4 +1,4 @@
-import {AchiOptions, RpcClient} from './RpcClient'
+import { AchiOptions, RpcClient } from './RpcClient';
 import {
   AddKeyResponse,
   FarmedAmountResponse,
@@ -14,31 +14,31 @@ import {
   TransactionsResponse,
   WalletBalanceResponse,
   WalletsResponse,
-} from '../types/Wallet/RpcResponse'
-import {getAchiConfig, getAchiFilePath} from './AchiNodeUtils'
-import {CertPath} from '../types/CertPath'
-import {RpcResponse} from '../types/RpcResponse'
+} from '../types/Wallet/RpcResponse';
+import { getAchiConfig, getAchiFilePath } from './AchiNodeUtils';
+import { CertPath } from '../types/CertPath';
+import { RpcResponse } from '../types/RpcResponse';
 
-const achiConfig = getAchiConfig()
-const defaultProtocol = 'https'
-const defaultHostname = achiConfig?.self_hostname || 'localhost'
-const defaultPort = achiConfig?.wallet.rpc_port || 9985
-const host = 'https://backup.achi.net' // TODO: replace with correct one
+const achiConfig = getAchiConfig();
+const defaultProtocol = 'https';
+const defaultHostname = achiConfig?.self_hostname || 'localhost';
+const defaultPort = achiConfig?.wallet.rpc_port || 9985;
+const host = 'https://backup.achi.net'; // TODO: replace with correct one
 
-const defaultCaCertPath = achiConfig?.private_ssl_ca.crt
-const defaultCertPath = achiConfig?.daemon_ssl.private_crt
-const defaultCertKey = achiConfig?.daemon_ssl.private_key
+const defaultCaCertPath = achiConfig?.private_ssl_ca.crt;
+const defaultCertPath = achiConfig?.daemon_ssl.private_crt;
+const defaultCertKey = achiConfig?.daemon_ssl.private_key;
 
-class Wallet extends RpcClient {
+export class Wallet extends RpcClient {
   public constructor(options?: Partial<AchiOptions> & CertPath) {
     super({
       caCertPath: options?.caCertPath || getAchiFilePath(defaultCaCertPath),
-      certPath  : options?.certPath || getAchiFilePath(defaultCertPath),
-      hostname  : options?.hostname || defaultHostname,
-      keyPath   : options?.keyPath || getAchiFilePath(defaultCertKey),
-      port      : options?.port || defaultPort,
-      protocol  : options?.protocol || defaultProtocol,
-    })
+      certPath: options?.certPath || getAchiFilePath(defaultCertPath),
+      hostname: options?.hostname || defaultHostname,
+      keyPath: options?.keyPath || getAchiFilePath(defaultCertKey),
+      port: options?.port || defaultPort,
+      protocol: options?.protocol || defaultProtocol,
+    });
   }
 
   public async logIn(
@@ -48,7 +48,7 @@ class Wallet extends RpcClient {
       fingerprint,
       host,
       type: 'start',
-    })
+    });
   }
 
   public async logInAndRestore(
@@ -59,8 +59,8 @@ class Wallet extends RpcClient {
       file_path: filePath,
       fingerprint,
       host,
-      type     : 'restore_backup',
-    })
+      type: 'restore_backup',
+    });
   }
 
   public async logInAndSkip(
@@ -70,14 +70,14 @@ class Wallet extends RpcClient {
       fingerprint,
       host,
       type: 'skip',
-    })
+    });
   }
 
   public async getPublicKeys(): Promise<PublicKeysResponse> {
     return this.request<PublicKeysResponse>(
       'get_public_keys',
       {},
-    )
+    );
   }
 
   public async getPrivateKey(
@@ -85,15 +85,15 @@ class Wallet extends RpcClient {
   ): Promise<PrivateKeyResponse> {
     return this.request<PrivateKeyResponse>(
       'get_private_key',
-      {fingerprint},
-    )
+      { fingerprint },
+    );
   }
 
   public async generateMnemonic(): Promise<GenerateMnemonicResponse> {
-    return await this.request<GenerateMnemonicResponse>(
+    return this.request<GenerateMnemonicResponse>(
       'generate_mnemonic',
       {},
-    )
+    );
   }
 
   public async addKey(
@@ -103,35 +103,35 @@ class Wallet extends RpcClient {
     return this.request<AddKeyResponse>('add_key', {
       mnemonic,
       type,
-    })
+    });
   }
 
   public async deleteKey(
     fingerprint: number,
   ): Promise<RpcResponse> {
-    return this.request<RpcResponse>('delete_key', {fingerprint})
+    return this.request<RpcResponse>('delete_key', { fingerprint });
   }
 
   public async deleteAllKeys(): Promise<RpcResponse> {
-    return this.request<RpcResponse>('delete_all_keys', {})
+    return this.request<RpcResponse>('delete_all_keys', {});
   }
 
   public async getSyncStatus(): Promise<SyncStatusResponse> {
-    return this.request<SyncStatusResponse>('get_sync_status', {})
+    return this.request<SyncStatusResponse>('get_sync_status', {});
   }
 
   public async getHeightInfo(): Promise<HeightResponse> {
-    return this.request<HeightResponse>('get_height_info', {})
+    return this.request<HeightResponse>('get_height_info', {});
   }
 
   public async farmBlock(
     address: string,
   ): Promise<RpcResponse> {
-    return this.request<RpcResponse>('farm_block', {address})
+    return this.request<RpcResponse>('farm_block', { address });
   }
 
   public async getWallets(): Promise<WalletsResponse> {
-    return this.request<WalletsResponse>('get_wallets', {})
+    return this.request<WalletsResponse>('get_wallets', {});
   }
 
   // TODO: create_new_wallet
@@ -139,7 +139,7 @@ class Wallet extends RpcClient {
   public async getWalletBalance(
     walletId: number,
   ): Promise<WalletBalanceResponse> {
-    return this.request<WalletBalanceResponse>('get_wallet_balance', {wallet_id: walletId})
+    return this.request<WalletBalanceResponse>('get_wallet_balance', { wallet_id: walletId });
   }
 
   public async getTransaction(
@@ -150,9 +150,9 @@ class Wallet extends RpcClient {
       'get_transaction',
       {
         transaction_id: transactionId,
-        wallet_id     : walletId,
+        wallet_id: walletId,
       },
-    )
+    );
   }
 
   public async getTransactions(
@@ -167,7 +167,7 @@ class Wallet extends RpcClient {
         start,
         wallet_id: walletId,
       },
-    )
+    );
   }
 
   public async getAddress(
@@ -177,9 +177,9 @@ class Wallet extends RpcClient {
       'get_next_address',
       {
         new_address: false,
-        wallet_id  : walletId,
+        wallet_id: walletId,
       },
-    )
+    );
   }
 
   public async getNextAddress(
@@ -189,9 +189,9 @@ class Wallet extends RpcClient {
       'get_next_address',
       {
         new_address: true,
-        wallet_id  : walletId,
+        wallet_id: walletId,
       },
-    )
+    );
   }
 
   public async sendTransaction(
@@ -208,7 +208,7 @@ class Wallet extends RpcClient {
         fee,
         wallet_id: walletId,
       },
-    )
+    );
   }
 
   public async sendTransactionAndGetId(
@@ -225,7 +225,7 @@ class Wallet extends RpcClient {
         fee,
         wallet_id: walletId,
       },
-    )
+    );
   }
 
   public async sendTransactionRaw(
@@ -242,21 +242,21 @@ class Wallet extends RpcClient {
         fee,
         wallet_id: walletId,
       },
-    )
+    );
   }
 
   public async createBackup(filePath: string): Promise<RpcResponse> {
-    return this.request<RpcResponse>('create_backup', {file_path: filePath})
+    return this.request<RpcResponse>('create_backup', { file_path: filePath });
   }
 
   public async getTransactionCount(
     walletId: number,
   ): Promise<TransactionCountResponse> {
-    return this.request<TransactionCountResponse>('get_transaction_count', {wallet_id: walletId})
+    return this.request<TransactionCountResponse>('get_transaction_count', { wallet_id: walletId });
   }
 
   public async getFarmedAmount(): Promise<FarmedAmountResponse> {
-    return this.request<FarmedAmountResponse>('get_farmed_amount', {})
+    return this.request<FarmedAmountResponse>('get_farmed_amount', {});
   }
 
   // TODO: create_signed_transaction
@@ -286,5 +286,3 @@ class Wallet extends RpcClient {
   // TODO: send_clawback_transaction:
   // TODO: add_rate_limited_funds:
 }
-
-export {Wallet}

@@ -1,5 +1,5 @@
-import {Context, SessionFlavor} from 'grammy'
-import {MinerStats} from './MinerStats'
+import { Context, SessionFlavor } from 'grammy';
+import { MinerStats } from './MinerStats';
 
 export interface LastStats {
   date: number
@@ -10,4 +10,4 @@ export interface SessionData {
   lastStats: Record<string, LastStats>
 }
 
-export type ContextWithSession = Context & SessionFlavor<SessionData>
+export type ContextWithSession = Context & SessionFlavor<SessionData>;

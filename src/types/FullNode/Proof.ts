@@ -1,4 +1,4 @@
 export interface Proof {
-    witness: string
-    witness_type: number
+  witness: string
+  witness_type: number
 }

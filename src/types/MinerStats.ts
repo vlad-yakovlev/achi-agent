@@ -5,15 +5,15 @@ import {
   SyncStatusResponse,
   TransactionCountResponse,
   WalletBalanceResponse,
-} from './Wallet/RpcResponse'
+} from './Wallet/RpcResponse';
 import {
   PlotDirectoriesResponse,
   PlotsResponse,
-} from './Harvester/RpcResponse'
-import {BlockchainStateResponse} from './FullNode/RpcResponse'
-import {ConnectionResponse} from './RpcClient/RpcResponse'
-import {SignagePointsResponse} from './Farmer/RpcResponse'
-import {WalletInfo} from './Wallet/WalletInfo'
+} from './Harvester/RpcResponse';
+import { BlockchainStateResponse } from './FullNode/RpcResponse';
+import { ConnectionResponse } from './RpcClient/RpcResponse';
+import { SignagePointsResponse } from './Farmer/RpcResponse';
+import { WalletInfo } from './Wallet/WalletInfo';
 
 export interface MinerStats {
   farmer: {

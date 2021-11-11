@@ -1,4 +1,4 @@
-import {AchiOptions, RpcClient} from './RpcClient'
+import { AchiOptions, RpcClient } from './RpcClient';
 import {
   AdditionsAndRemovalsResponse,
   BlockchainStateResponse,
@@ -9,34 +9,34 @@ import {
   CoinResponse,
   NetspaceResponse,
   UnfinishedBlockHeadersResponse,
-} from '../types/FullNode/RpcResponse'
-import {getAchiConfig, getAchiFilePath} from './AchiNodeUtils'
-import {Block} from '../types/FullNode/Block'
-import {CertPath} from '../types/CertPath'
-import {RpcResponse} from '../types/RpcResponse'
+} from '../types/FullNode/RpcResponse';
+import { getAchiConfig, getAchiFilePath } from './AchiNodeUtils';
+import { Block } from '../types/FullNode/Block';
+import { CertPath } from '../types/CertPath';
+import { RpcResponse } from '../types/RpcResponse';
 
-const achiConfig = getAchiConfig()
-const defaultProtocol = 'https'
-const defaultHostname = achiConfig?.self_hostname || 'localhost'
-const defaultPort = achiConfig?.full_node.rpc_port || 9965
-const defaultCaCertPath = achiConfig?.private_ssl_ca.crt
-const defaultCertPath = achiConfig?.daemon_ssl.private_crt
-const defaultCertKey = achiConfig?.daemon_ssl.private_key
+const achiConfig = getAchiConfig();
+const defaultProtocol = 'https';
+const defaultHostname = achiConfig?.self_hostname || 'localhost';
+const defaultPort = achiConfig?.full_node.rpc_port || 9965;
+const defaultCaCertPath = achiConfig?.private_ssl_ca.crt;
+const defaultCertPath = achiConfig?.daemon_ssl.private_crt;
+const defaultCertKey = achiConfig?.daemon_ssl.private_key;
 
-class FullNode extends RpcClient {
+export class FullNode extends RpcClient {
   public constructor(options?: Partial<AchiOptions> & CertPath) {
     super({
       caCertPath: options?.caCertPath || getAchiFilePath(defaultCaCertPath),
-      certPath  : options?.certPath || getAchiFilePath(defaultCertPath),
-      hostname  : options?.hostname || defaultHostname,
-      keyPath   : options?.keyPath || getAchiFilePath(defaultCertKey),
-      port      : options?.port || defaultPort,
-      protocol  : options?.protocol || defaultProtocol,
-    })
+      certPath: options?.certPath || getAchiFilePath(defaultCertPath),
+      hostname: options?.hostname || defaultHostname,
+      keyPath: options?.keyPath || getAchiFilePath(defaultCertKey),
+      port: options?.port || defaultPort,
+      protocol: options?.protocol || defaultProtocol,
+    });
   }
 
   public async getBlockchainState(): Promise<BlockchainStateResponse> {
-    return this.request<BlockchainStateResponse>('get_blockchain_state', {})
+    return this.request<BlockchainStateResponse>('get_blockchain_state', {});
   }
 
   public async getBlock(
@@ -44,7 +44,7 @@ class FullNode extends RpcClient {
   ): Promise<BlockResponse> {
     return this.request<BlockResponse>('get_block', {
       header_hash: headerHash,
-    })
+    });
   }
 
   public async getBlocks<B extends boolean>(
@@ -56,7 +56,7 @@ class FullNode extends RpcClient {
       end,
       exclude_header_hash: excludeHeaderHash || false,
       start,
-    })
+    });
   }
 
   public async getBlockRecordByHeight(
@@ -64,7 +64,7 @@ class FullNode extends RpcClient {
   ): Promise<BlockRecordResponse> {
     return this.request<BlockRecordResponse>('get_block_record_by_height', {
       height,
-    })
+    });
   }
 
   public async getBlockRecord(
@@ -72,7 +72,7 @@ class FullNode extends RpcClient {
   ): Promise<BlockRecordResponse> {
     return this.request<BlockRecordResponse>('get_block_record', {
       header_hash: hash,
-    })
+    });
   }
 
   // TODO: get_block_records
@@ -85,7 +85,7 @@ class FullNode extends RpcClient {
       {
         height,
       },
-    )
+    );
   }
 
   public async getNetworkSpace(
@@ -95,7 +95,7 @@ class FullNode extends RpcClient {
     return this.request<NetspaceResponse>('get_network_space', {
       newer_block_header_hash: newerBlockHeaderHash,
       older_block_header_hash: olderBlockHeaderHash,
-    })
+    });
   }
 
   public async getAdditionsAndRemovals(
@@ -106,13 +106,13 @@ class FullNode extends RpcClient {
       {
         header_hash: hash,
       },
-    )
+    );
   }
 
   // TODO: get_initial_freeze_period
 
   public async getNetworkInfo(): Promise<RpcResponse> {
-    return this.request<RpcResponse>('get_network_info', {})
+    return this.request<RpcResponse>('get_network_info', {});
   }
 
   public async getUnspentCoins(
@@ -121,11 +121,11 @@ class FullNode extends RpcClient {
     endHeight?: number,
   ): Promise<CoinResponse> {
     return this.request<CoinResponse>('get_coin_records_by_puzzle_hash', {
-      end_height         : endHeight,
+      end_height: endHeight,
       include_spent_coins: false,
-      puzzle_hash        : puzzleHash,
-      start_height       : startHeight,
-    })
+      puzzle_hash: puzzleHash,
+      start_height: startHeight,
+    });
   }
 
   // TODO: get_coin_records_by_puzzle_hashes
@@ -135,20 +135,18 @@ class FullNode extends RpcClient {
   ): Promise<CoinRecordResponse> {
     return this.request<CoinRecordResponse>('get_coin_record_by_name', {
       name,
-    })
+    });
   }
 
   // TODO: push_tx
 
   public async getAllMempoolTxIds(): Promise<RpcResponse> {
-    return this.request<RpcResponse>('get_all_mempool_tx_ids', {})
+    return this.request<RpcResponse>('get_all_mempool_tx_ids', {});
   }
 
   public async getAllMempoolItems(): Promise<RpcResponse> {
-    return this.request<RpcResponse>('get_all_mempool_items', {})
+    return this.request<RpcResponse>('get_all_mempool_items', {});
   }
 
   // TODO: get_mempool_item_by_tx_id
 }
-
-export {FullNode}

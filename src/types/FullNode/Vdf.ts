@@ -1,9 +1,9 @@
 export interface VdfOutput {
-    data: string
+  data: string
 }
 
 export interface Vdf {
-    challenge: string
-    number_of_iterations: string
-    output: VdfOutput
+  challenge: string
+  number_of_iterations: string
+  output: VdfOutput
 }
