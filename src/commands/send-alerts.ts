@@ -13,11 +13,11 @@ const validateLastStats = (lastStats: LastStats) => {
   const updateDiff = differenceInMinutes(Date.now(), lastStats.date * 1000);
 
   if (updateDiff > config.thresholds.lastUpdateDiffInMinutes) {
-    errors.push(`hasn't send the stats for the last ${updateDiff} minutes`);
+    errors.push(`не отправлял статистику последние ${updateDiff} минут`);
   }
 
-  if (!lastStats.stats.fullNode.blockchainState.blockchain_state.sync.synced) {
-    errors.push('full-node not synced');
+  if (lastStats.stats.harvester.plots.plots.length < config.thresholds.plotCount) {
+    errors.push(`у харвестера ${lastStats.stats.harvester.plots.plots.length} плотов`);
   }
 
   const fullNodeConnectionsCount = lastStats.stats.fullNode.connections.connections
@@ -25,15 +25,15 @@ const validateLastStats = (lastStats: LastStats) => {
     .length;
 
   if (fullNodeConnectionsCount < config.thresholds.fullNodeConnectionsCount) {
-    errors.push(`full-node has only ${fullNodeConnectionsCount} connections`);
+    errors.push(`у узла ${fullNodeConnectionsCount} подключений`);
   }
 
-  if (lastStats.stats.harvester.plots.plots.length < config.thresholds.plotCount) {
-    errors.push(`harvester has only ${lastStats.stats.harvester.plots.plots.length} plots`);
+  if (!lastStats.stats.fullNode.blockchainState.blockchain_state.sync.synced) {
+    errors.push('узел не синхронизирован');
   }
 
   if (!lastStats.stats.wallet.syncStatus.synced) {
-    errors.push('wallet not synced');
+    errors.push('кошелек не синхронизирован');
   }
 
   return errors;
