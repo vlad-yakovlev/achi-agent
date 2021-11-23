@@ -17,7 +17,7 @@ const validateLastStats = (lastStats: LastStats) => {
   }
 
   if (lastStats.stats.harvester.plots.plots.length < config.thresholds.plotCount) {
-    errors.push(`у харвестера ${lastStats.stats.harvester.plots.plots.length} плотов`);
+    errors.push(`${lastStats.stats.harvester.plots.plots.length} плотов`);
   }
 
   const fullNodeConnectionsCount = lastStats.stats.fullNode.connections.connections
