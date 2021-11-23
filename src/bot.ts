@@ -44,14 +44,14 @@ import { MicroTelegram } from './telegram/MicroTelegram';
 
           const fullNodeSyncStatus = (() => {
             if (lastStats.stats.fullNode.blockchainState.blockchain_state.sync.synced) {
-              return '✅ Synced';
+              return '✅ Синхронизирован';
             }
 
             if (lastStats.stats.fullNode.blockchainState.blockchain_state.sync.sync_mode) {
-              return '⏳ Syncing';
+              return '⏳ Синхронизируется';
             }
 
-            return '❌ Not synced';
+            return '❌ Не синхронизирован';
           })();
 
           const fullNodeConnectionsCount = (() => {
@@ -78,14 +78,14 @@ import { MicroTelegram } from './telegram/MicroTelegram';
 
           const walletSyncStatus = (() => {
             if (lastStats.stats.wallet.syncStatus.synced) {
-              return '✅ Synced';
+              return '✅ Синхронизирован';
             }
 
             if (lastStats.stats.wallet.syncStatus.syncing) {
-              return '⏳ Syncing';
+              return '⏳ Синхронизируется';
             }
 
-            return '❌ Not synced';
+            return '❌ Не синхронизирован';
           })();
 
           const totalBalance = (() => {
@@ -98,12 +98,12 @@ import { MicroTelegram } from './telegram/MicroTelegram';
 
           return [
             `*${minerName}*`,
-            `Last update: ${updatedAt}`,
-            `Full node sync status: ${fullNodeSyncStatus}`,
-            `Full node connections: ${fullNodeConnectionsCount}`,
-            `Wallet sync status: ${walletSyncStatus}`,
-            `Plots count: ${plotsCount}`,
-            `Total balance: ${totalBalance}`,
+            `Последнее обновление: ${updatedAt}`,
+            `Количество плотов: ${plotsCount}`,
+            `Кол-во подключений узла: ${fullNodeConnectionsCount}`,
+            `Статус синхронизации узла: ${fullNodeSyncStatus}`,
+            `Статус синхронизации кошелька: ${walletSyncStatus}`,
+            `Общий баланс: ${totalBalance}`,
           ].join('\n');
         })
         .join('\n\n'),
