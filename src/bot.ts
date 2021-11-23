@@ -36,10 +36,10 @@ import { MicroTelegram } from './telegram/MicroTelegram';
             const updateDiff = differenceInMinutes(Date.now(), lastStats.date * 1000);
 
             if (updateDiff > config.thresholds.lastUpdateDiffInMinutes) {
-              return `❌ ${formattedDate}`;
+              return `${formattedDate} ❌`;
             }
 
-            return `✅ ${formattedDate}`;
+            return `${formattedDate} ✅`;
           })();
 
           const fullNodeSyncStatus = (() => {
@@ -60,20 +60,20 @@ import { MicroTelegram } from './telegram/MicroTelegram';
               .length;
 
             if (count < config.thresholds.fullNodeConnectionsCount) {
-              return `❌ ${count}`;
+              return `${count} ❌`;
             }
 
-            return `✅ ${count}`;
+            return `${count} ✅`;
           })();
 
           const plotsCount = (() => {
             const count = lastStats.stats.harvester.plots.plots.length;
 
             if (count < config.thresholds.plotCount) {
-              return `❌ ${count}`;
+              return `${count} ❌`;
             }
 
-            return `✅ ${count}`;
+            return `${count} ✅`;
           })();
 
           const walletSyncStatus = (() => {
