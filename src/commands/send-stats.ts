@@ -11,29 +11,40 @@ import { Wallet } from '../achi/Wallet';
     const minerConfig = getMinerConfig();
     const microTelegram = new MicroTelegram(minerConfig.telegram.botToken);
 
-    const farmer = new Farmer();
-    const fullNode = new FullNode();
-    const harvester = new Harvester();
-    const wallet = new Wallet();
+    const minerStats: MinerStats = {};
 
-    const minerStats: MinerStats = {
-      farmer: {
+    if (minerConfig.sendStats.farmer) {
+      const farmer = new Farmer();
+
+      minerStats.farmer = {
         connections: await farmer.getConnections(),
         signagePoints: await farmer.getSignagePoints(),
-      },
+      };
+    }
 
-      fullNode: {
+    if (minerConfig.sendStats.fullNode) {
+      const fullNode = new FullNode();
+
+      minerStats.fullNode = {
         blockchainState: await fullNode.getBlockchainState(),
         connections: await fullNode.getConnections(),
-      },
+      };
+    }
 
-      harvester: {
+    if (minerConfig.sendStats.harvester) {
+      const harvester = new Harvester();
+
+      minerStats.harvester = {
         connections: await harvester.getConnections(),
         plotDirectories: await harvester.getPlotDirectories(),
         plots: await harvester.getPlots(),
-      },
+      };
+    }
 
-      wallet: {
+    if (minerConfig.sendStats.wallet) {
+      const wallet = new Wallet();
+
+      minerStats.wallet = {
         connections: await wallet.getConnections(),
         farmedAmount: await wallet.getFarmedAmount(),
         heightInfo: await wallet.getHeightInfo(),
@@ -45,8 +56,8 @@ import { Wallet } from '../achi/Wallet';
           balance: await wallet.getWalletBalance(walletItem.id),
           transactionCount: await wallet.getTransactionCount(walletItem.id),
         }))),
-      },
-    };
+      };
+    }
 
     await microTelegram.sendDocument(
       minerConfig.telegram.minerBotsChatId,

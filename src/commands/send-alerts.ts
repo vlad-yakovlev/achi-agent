@@ -16,24 +16,30 @@ const validateLastStats = (lastStats: LastStats) => {
     errors.push(`не отправлял статистику последние ${updateDiff} минут`);
   }
 
-  if (lastStats.stats.harvester.plots.plots.length < config.thresholds.plotCount) {
-    errors.push(`${lastStats.stats.harvester.plots.plots.length} плотов`);
+  if (lastStats.stats.harvester) {
+    if (lastStats.stats.harvester.plots.plots.length < config.thresholds.plotCount) {
+      errors.push(`${lastStats.stats.harvester.plots.plots.length} плотов`);
+    }
   }
 
-  const fullNodeConnectionsCount = lastStats.stats.fullNode.connections.connections
-    .filter((connection) => connection.type === ConnectionType.FULL_NODE)
-    .length;
+  if (lastStats.stats.fullNode) {
+    const fullNodeConnectionsCount = lastStats.stats.fullNode.connections.connections
+      .filter((connection) => connection.type === ConnectionType.FULL_NODE)
+      .length;
 
-  if (fullNodeConnectionsCount < config.thresholds.fullNodeConnectionsCount) {
-    errors.push(`у узла ${fullNodeConnectionsCount} подключений`);
+    if (fullNodeConnectionsCount < config.thresholds.fullNodeConnectionsCount) {
+      errors.push(`у узла ${fullNodeConnectionsCount} подключений`);
+    }
+
+    if (!lastStats.stats.fullNode.blockchainState.blockchain_state.sync.synced) {
+      errors.push('узел не синхронизирован');
+    }
   }
 
-  if (!lastStats.stats.fullNode.blockchainState.blockchain_state.sync.synced) {
-    errors.push('узел не синхронизирован');
-  }
-
-  if (!lastStats.stats.wallet.syncStatus.synced) {
-    errors.push('кошелек не синхронизирован');
+  if (lastStats.stats.wallet) {
+    if (!lastStats.stats.wallet.syncStatus.synced) {
+      errors.push('кошелек не синхронизирован');
+    }
   }
 
   return errors;

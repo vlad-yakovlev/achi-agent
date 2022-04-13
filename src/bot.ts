@@ -43,6 +43,10 @@ import { MicroTelegram } from './telegram/MicroTelegram';
           })();
 
           const fullNodeSyncStatus = (() => {
+            if (!lastStats.stats.fullNode) {
+              return '';
+            }
+
             if (lastStats.stats.fullNode.blockchainState.blockchain_state.sync.synced) {
               return '✅';
             }
@@ -55,6 +59,10 @@ import { MicroTelegram } from './telegram/MicroTelegram';
           })();
 
           const fullNodeConnectionsCount = (() => {
+            if (!lastStats.stats.fullNode) {
+              return '';
+            }
+
             const count = lastStats.stats.fullNode.connections.connections
               .filter((connection) => connection.type === ConnectionType.FULL_NODE)
               .length;
@@ -67,6 +75,10 @@ import { MicroTelegram } from './telegram/MicroTelegram';
           })();
 
           const plotsCount = (() => {
+            if (!lastStats.stats.harvester) {
+              return '';
+            }
+
             const count = lastStats.stats.harvester.plots.plots.length;
 
             if (count < config.thresholds.plotCount) {
@@ -77,6 +89,10 @@ import { MicroTelegram } from './telegram/MicroTelegram';
           })();
 
           const walletSyncStatus = (() => {
+            if (!lastStats.stats.wallet) {
+              return '';
+            }
+
             if (lastStats.stats.wallet.syncStatus.synced) {
               return '✅';
             }
@@ -89,6 +105,10 @@ import { MicroTelegram } from './telegram/MicroTelegram';
           })();
 
           const totalBalance = (() => {
+            if (!lastStats.stats.wallet) {
+              return '';
+            }
+
             const balance = lastStats.stats.wallet.wallets
               // eslint-disable-next-line max-len
               .reduce((sum, wallet) => sum + wallet.balance.wallet_balance.confirmed_wallet_balance, 0);
@@ -99,12 +119,12 @@ import { MicroTelegram } from './telegram/MicroTelegram';
           return [
             `*${minerName}*`,
             `Последнее обновление: ${updatedAt}`,
-            `Количество плотов: ${plotsCount}`,
-            `Кол-во подкл. узла: ${fullNodeConnectionsCount}`,
-            `Статус синхр. узла: ${fullNodeSyncStatus}`,
-            `Статус синхр. кошелька: ${walletSyncStatus}`,
-            `Общий баланс: ${totalBalance}`,
-          ].join('\n');
+            plotsCount && `Количество плотов: ${plotsCount}`,
+            fullNodeConnectionsCount && `Кол-во подкл. узла: ${fullNodeConnectionsCount}`,
+            fullNodeSyncStatus && `Статус синхр. узла: ${fullNodeSyncStatus}`,
+            walletSyncStatus && `Статус синхр. кошелька: ${walletSyncStatus}`,
+            totalBalance && `Общий баланс: ${totalBalance}`,
+          ].filter(Boolean).join('\n');
         })
         .join('\n\n'),
       { parse_mode: 'Markdown' },

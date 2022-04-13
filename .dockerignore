@@ -1,17 +1,16 @@
-.git
-*Dockerfile*
-
-# dependencies
+# Dependencies
 /node_modules
 
-# misc
-.DS_Store
-*.pem
+# Default env
+/.env.default
+/.env.miner-default
 
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# db
+# DB
 /db
+
+# Misc
+**/.git
+**/*Dockerfile*
+**/.DS_Store
+**/*.pem
+**/npm-debug.log*

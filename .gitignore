@@ -1,18 +1,14 @@
-# dependencies
+# Dependencies
 /node_modules
 
-# misc
-.DS_Store
-*.pem
-.vscode
+# Local env
+/.env
 
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# local env files
-.env
-
-# db
+# DB
 /db
+
+# Misc
+**/.DS_Store
+**/*.pem
+**/.vscode
+**/npm-debug.log*

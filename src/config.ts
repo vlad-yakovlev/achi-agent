@@ -16,6 +16,13 @@ export const getMinerConfig = () => {
       botToken: process.env.BOT_TOKEN,
       minerBotsChatId: Number(process.env.MINER_BOTS_CHAT_ID),
     },
+
+    sendStats: {
+      farmer: process.env.SEND_STATS_FARMER === 'true',
+      fullNode: process.env.SEND_STATS_FULL_NODE === 'true',
+      harvester: process.env.SEND_STATS_HARVESTER === 'true',
+      wallet: process.env.SEND_STATS_WALLET === 'true',
+    },
   };
 };
 

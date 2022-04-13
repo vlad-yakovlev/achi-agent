@@ -16,23 +16,23 @@ import { SignagePointsResponse } from './Farmer/RpcResponse';
 import { WalletInfo } from './Wallet/WalletInfo';
 
 export interface MinerStats {
-  farmer: {
+  farmer?: {
     connections: ConnectionResponse
     signagePoints: SignagePointsResponse
   }
 
-  fullNode: {
+  fullNode?: {
     blockchainState: BlockchainStateResponse
     connections: ConnectionResponse
   }
 
-  harvester: {
+  harvester?: {
     connections: ConnectionResponse
     plotDirectories: PlotDirectoriesResponse
     plots: PlotsResponse
   }
 
-  wallet: {
+  wallet?: {
     connections: ConnectionResponse
     farmedAmount: FarmedAmountResponse
     heightInfo: HeightResponse
