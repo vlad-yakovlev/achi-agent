@@ -1,5 +1,5 @@
 import { MiddlewareFn, session } from 'grammy';
-import { FileAdapter } from '@satont/grammy-file-storage';
+import { FileAdapter } from '@grammyjs/storage-file';
 import path from 'path';
 import { ContextWithSession } from '../types/Storage';
 
