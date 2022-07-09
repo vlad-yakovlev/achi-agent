@@ -1,4 +1,4 @@
-import * as R from 'ramda';
+import * as R from 'remeda';
 import { differenceInMinutes } from 'date-fns';
 import { ContextWithSession, LastStats } from '../types/Storage';
 import { ConnectionType } from '../types/RpcClient/Connection';
@@ -57,21 +57,18 @@ const validateLastStats = (lastStats: LastStats) => {
       return fakeContext.session;
     })();
 
-    const errors = R.compose<
-    Record<string, LastStats>,
-    string[],
-    string[],
-    string[][],
-    string[]
-    >(
-      R.flatten,
+    const errors = R.pipe(
+      session.lastStats,
+
+      R.keys,
+
+      R.sort((left, right) => left.localeCompare(right)),
 
       R.map((minerName) => validateLastStats(session.lastStats[minerName])
         .map((error) => `🚨 *${minerName}* ${error}`)),
 
-      R.sort((left, right) => left.localeCompare(right)),
-      R.keys,
-    )(session.lastStats);
+      R.flatten(),
+    );
 
     if (errors.length) {
       await microTelegram.sendSticker(
