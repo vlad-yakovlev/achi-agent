@@ -59,14 +59,9 @@ const validateLastStats = (lastStats: LastStats) => {
 
     const errors = R.pipe(
       session.lastStats,
-
       R.keys,
-
       R.sort((left, right) => left.localeCompare(right)),
-
-      R.map((minerName) => validateLastStats(session.lastStats[minerName])
-        .map((error) => `🚨 *${minerName}* ${error}`)),
-
+      R.map((minerName) => validateLastStats(session.lastStats[minerName]).map((error) => `🚨 *${minerName}* ${error}`)),
       R.flatten(),
     );
 
